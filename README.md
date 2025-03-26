@@ -34,7 +34,7 @@ A Python-based phishing detector created by [Ahmad Haji](https://ahmadhaji.com) 
 
 ## Installation
 
-1. **Clone the Repository:**
    ```bash
-   git clone https://github.com/yourusername/phishing-detection.git
-   cd phishing-detection
+   pip install -r requirements.txt
+   python phishing_detector.py <URL_OR_DOMAIN>
+   
