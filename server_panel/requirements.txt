@@ -1,0 +1,5 @@
+Flask
+tldextract
+python-whois
+requests
+python-Levenshtein
