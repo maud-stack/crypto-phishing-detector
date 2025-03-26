@@ -1,40 +1,50 @@
-<b>Description:</b>
+# Phishing Detection & Prevention System for Crypto Services
 
-The <b>Phishing Detection and Prevention System for Crypto Services</b> is a Python-based tool created by [Ahmad Haji](https://ahmadhaji.com) to help identify and flag suspicious (potentially phishing) URLs. It incorporates MetaMask’s [eth-phishing-detect](https://github.com/MetaMask/eth-phishing-detect) lists—specifically the whitelist, blacklist, and fuzzylist—and combines them with additional heuristic checks (e.g., WHOIS domain age, punycode detection, suspicious crypto-related keywords). When a domain/URL is entered, the script returns a “Safe,” “Suspicious,” or “Phishing” classification along with an associated risk score.
+A Python-based tool created by **[Ahmad Haji](https://ahmadhaji.com)** that checks a given domain or URL against **phishing threats**. It leverages:
+
+- **MetaMask’s** [`eth-phishing-detect`](https://github.com/MetaMask/eth-phishing-detect) lists (whitelist, blacklist, fuzzylist)  
+- **Heuristic checks** (WHOIS domain age, punycode detection, suspicious crypto keywords, IP-based domain)  
+- **Fuzzy matching** (Levenshtein distance) to identify near-duplicate domains (e.g., `myetherwal1et.com` vs. `myetherwallet.com`)
+
+When a URL is submitted, the system returns a **classification**—“Safe,” “Suspicious,” or “Phishing”—along with a **risk score** and the domain’s approximate age in days, if available.
 
 ---
 
-# Phishing Detection and Prevention System for Crypto Services
-
-A Python-based phishing detector created by [Ahmad Haji](https://ahmadhaji.com) that integrates MetaMask’s blacklist, whitelist, and fuzzylist for crypto-focused domains, plus additional heuristic checks.
-
+## Table of Contents
+1. [Features](#features)
+2. [Project Structure](#project-structure)
+3. [Installation](#installation)
+4. [Usage](#usage)
+5. [Configuration & Customization](#configuration--customization)
+6. [API Endpoint](#api-endpoint)
+7. [Examples](#examples)
+8. [Disclaimer](#disclaimer)
+9. [Author](#author)
 
 ---
 
 ## Features
-1. <b>MetaMask Config Integration</b>  
-   Automatically checks input domains against MetaMask’s `whitelist`, `blacklist`, and `fuzzylist` via a remote JSON or local file.
 
-2. <b>Heuristic Checks</b>  
-   - **Suspicious Keywords** (e.g., `binance`, `airdrop`, `wallet`, etc.)  
-   - **Punycode Detection** (IDN homograph attacks)  
-   - **WHOIS Domain Age** (newly registered domains are suspicious)  
-   - **IP Address Check** (IP-based domains often indicate malicious sites)
+1. **MetaMask Config Integration**  
+   Checks input domains against MetaMask’s `whitelist`, `blacklist`, and `fuzzylist` (fetched or stored locally).
 
-3. <b>Fuzzy Matching</b>  
-   - Uses Levenshtein distance to detect near-duplicates (e.g. `myetherwal1et.com` vs. `myetherwallet.com`).
+2. **Heuristic Phishing Detection**  
+   - **Suspicious Keywords**: (“binance,” “wallet,” “metamask,” etc.)  
+   - **Punycode** (IDN homograph attacks)  
+   - **Domain Age** (WHOIS)  
+   - **IP-based Domains**  
+   - **Fuzzy Matching** to detect near-duplicate phishing domains
 
-4. <b>Custom Safe List</b>  
-   - Automatically considers `ahmadhaji.com` (or any domains you choose) as “Safe.”
+3. **Risk Scoring & Classification**  
+   A simple scoring mechanism (0 to 999) that classifies domains as **Safe**, **Suspicious**, or **Phishing**.
 
-5. <b>Simple Classification</b>  
-   - Returns **Safe**, **Suspicious**, or **Phishing** based on cumulative risk score.
+4. **Custom Safe Domains**  
+   Automatically treats certain domains (e.g., `ahmadhaji.com`) as safe.
+
+5. **Flask-based REST API**  
+   Allows easy integration with other services or UIs.
 
 ---
 
-## Installation
+## Project Structure
 
-   ```bash
-   pip install -r requirements.txt
-   python phishing_detector.py <URL_OR_DOMAIN>
-   
