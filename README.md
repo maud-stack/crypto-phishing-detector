@@ -8,15 +8,6 @@ The <b>Phishing Detection and Prevention System for Crypto Services</b> is a Pyt
 
 A Python-based phishing detector created by [Ahmad Haji](https://ahmadhaji.com) that integrates MetaMask’s blacklist, whitelist, and fuzzylist for crypto-focused domains, plus additional heuristic checks.
 
-## Table of Contents
-- [Features](#features)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Project Structure](#project-structure)
-- [Configuration](#configuration)
-- [How It Works](#how-it-works)
-- [Disclaimer](#disclaimer)
-- [Author](#author)
 
 ---
 
