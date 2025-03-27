@@ -1,7 +1,5 @@
 <h1>🚨 Crypto-Phishing Detector</h1>
 
-<img src="https://placehold.co/800x200?text=Crypto-Phishing+Detector+Banner" alt="Phishing Detector Banner">
-
 <p>
   A lightweight yet powerful <b>phishing detection</b> tool tailored for <b>crypto/web3</b> domains.<br>
   This repository includes both a <b>standalone Python script</b> and a <b>Flask REST API</b> for detecting suspicious or malicious URLs.<br>
