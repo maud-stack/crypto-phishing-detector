@@ -48,7 +48,7 @@
 <h2>📁 Repository Structure</h2>
 
 <pre>
-crypto-phishingdetector/
+crypto-phishing-detector/
 ├── server_panel/
 │   ├── app.py               # Flask API Server
 │   ├── phishing_detector.py # Detection logic for API
@@ -66,8 +66,8 @@ crypto-phishingdetector/
 
 <ol>
   <li><b>Clone the repository:</b><br>
-  <pre><code>git clone https://github.com/maud-stack/crypto-phishingdetector.git
-cd crypto-phishingdetector</code></pre></li>
+  <pre><code>git clone https://github.com/maud-stack/crypto-phishing-detector.git
+cd crypto-phishing-detector</code></pre></li>
 
   <li><b>Install dependencies (CLI):</b><br>
   <pre><code>pip install -r requirements.txt</code></pre></li>
