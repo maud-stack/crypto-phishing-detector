@@ -1,6 +1,6 @@
 <h1>🚨 Crypto-Phishing Detector</h1>
 
-img src="https://i.imgur.com/JXGLjL9.png" alt="Phishing Detector Panel">
+<img src="https://i.imgur.com/JXGLjL9.png" alt="Phishing Detector Panel">
 
 
 <p>
