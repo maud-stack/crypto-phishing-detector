@@ -1,50 +1,181 @@
-# Phishing Detection & Prevention System for Crypto Services
+<h1>🚨 Crypto-Phishing Detector</h1>
 
-A Python-based tool created by **[Ahmad Haji](https://ahmadhaji.com)** that checks a given domain or URL against **phishing threats**. It leverages:
+<img src="https://placehold.co/800x200?text=Crypto-Phishing+Detector+Banner" alt="Phishing Detector Banner">
 
-- **MetaMask’s** [`eth-phishing-detect`](https://github.com/MetaMask/eth-phishing-detect) lists (whitelist, blacklist, fuzzylist)  
-- **Heuristic checks** (WHOIS domain age, punycode detection, suspicious crypto keywords, IP-based domain)  
-- **Fuzzy matching** (Levenshtein distance) to identify near-duplicate domains (e.g., `myetherwal1et.com` vs. `myetherwallet.com`)
+<p>
+  A lightweight yet powerful <b>phishing detection</b> tool tailored for <b>crypto/web3</b> domains.<br>
+  This repository includes both a <b>standalone Python script</b> and a <b>Flask REST API</b> for detecting suspicious or malicious URLs.<br>
+  It leverages <b>MetaMask</b>’s eth-phishing-detect lists, fuzzy domain matching, WHOIS lookups, punycode checks, and more.
+</p>
 
-When a URL is submitted, the system returns a **classification**—“Safe,” “Suspicious,” or “Phishing”—along with a **risk score** and the domain’s approximate age in days, if available.
+<hr>
 
----
+<h2>🔐 Features</h2>
 
-## Table of Contents
-1. [Features](#features)
-2. [Project Structure](#project-structure)
-3. [Installation](#installation)
-4. [Usage](#usage)
-5. [Configuration & Customization](#configuration--customization)
-6. [API Endpoint](#api-endpoint)
-7. [Examples](#examples)
-8. [Disclaimer](#disclaimer)
-9. [Author](#author)
+<ul>
+  <li><b>MetaMask List Integration</b><br>
+      Automatically checks URLs against MetaMask’s official <b>blacklist</b>, <b>whitelist</b>, and <b>fuzzylist</b>.
+  </li>
+  <li><b>Heuristic Scoring</b><br>
+      Flags suspicious URLs using:
+      <ul>
+        <li>IP-based domains</li>
+        <li>Punycode usage</li>
+        <li>Crypto-related keywords</li>
+        <li>WHOIS-based domain age</li>
+      </ul>
+  </li>
+  <li><b>Fuzzy Matching</b><br>
+      Detects typo-squatting using <a href="https://en.wikipedia.org/wiki/Levenshtein_distance">Levenshtein distance</a> (with <code>difflib</code> fallback).<br>
+      Example: <code>binanse.com</code> vs <code>binance.com</code>
+  </li>
+  <li><b>CLI or REST API</b><br>
+      <ul>
+        <li><b>CLI</b>: Run <code>python phishing_detector.py &lt;URL&gt;</code> for instant analysis</li>
+        <li><b>API</b>: Use <code>/api/check_phishing</code> via GET or POST</li>
+      </ul>
+  </li>
+  <li><b>Configurable & Extensible</b><br>
+      Easily modify:
+      <ul>
+        <li>Risk scoring thresholds</li>
+        <li>Suspicious keywords</li>
+        <li>Custom domain lists</li>
+      </ul>
+  </li>
+</ul>
 
----
+<hr>
 
-## Features
+<h2>📁 Repository Structure</h2>
 
-1. **MetaMask Config Integration**  
-   Checks input domains against MetaMask’s `whitelist`, `blacklist`, and `fuzzylist` (fetched or stored locally).
+<pre>
+crypto-phishingdetector/
+├── server_panel/
+│   ├── app.py               # Flask API Server
+│   ├── phishing_detector.py # Detection logic for API
+│   └── requirements.txt     # Server-side dependencies
+├── phishing_detector.py     # Standalone CLI script
+├── requirements.txt         # CLI dependencies
+└── README.md                # This file
+</pre>
 
-2. **Heuristic Phishing Detection**  
-   - **Suspicious Keywords**: (“binance,” “wallet,” “metamask,” etc.)  
-   - **Punycode** (IDN homograph attacks)  
-   - **Domain Age** (WHOIS)  
-   - **IP-based Domains**  
-   - **Fuzzy Matching** to detect near-duplicate phishing domains
+<blockquote><b>Note:</b> There are two <code>phishing_detector.py</code> files — one in root and one under <code>server_panel/</code>. You may unify or rename them.</blockquote>
 
-3. **Risk Scoring & Classification**  
-   A simple scoring mechanism (0 to 999) that classifies domains as **Safe**, **Suspicious**, or **Phishing**.
+<hr>
 
-4. **Custom Safe Domains**  
-   Automatically treats certain domains (e.g., `ahmadhaji.com`) as safe.
+<h2>⚙️ Installation</h2>
 
-5. **Flask-based REST API**  
-   Allows easy integration with other services or UIs.
+<ol>
+  <li><b>Clone the repository:</b><br>
+  <pre><code>git clone https://github.com/maud-stack/crypto-phishingdetector.git
+cd crypto-phishingdetector</code></pre></li>
 
----
+  <li><b>Install dependencies (CLI):</b><br>
+  <pre><code>pip install -r requirements.txt</code></pre></li>
 
-## Project Structure
+  <li><b>Install dependencies for Flask API (optional):</b><br>
+  <pre><code>pip install -r server_panel/requirements.txt</code></pre></li>
 
+  <li><b>Optional: Better fuzzy matching with python-Levenshtein:</b><br>
+  <pre><code>pip install python-Levenshtein</code></pre></li>
+</ol>
+
+<hr>
+
+<h2>🚀 Usage</h2>
+
+<h3>A) Command-Line (CLI)</h3>
+<pre><code>python phishing_detector.py &lt;URL_OR_DOMAIN&gt;</code></pre>
+<b>Example:</b>
+<pre><code>python phishing_detector.py https://some-suspicious-domain.xyz</code></pre>
+<b>Output:</b>
+<pre>
+URL: https://some-suspicious-domain.xyz
+Classification: Phishing
+Risk Score: 7
+Domain Age (days): Unknown
+</pre>
+
+<h3>B) REST API (Flask)</h3>
+
+<ol>
+  <li><b>Navigate to server_panel/ and run:</b><br>
+  <pre><code>cd server_panel
+python app.py</code></pre></li>
+
+  <li><b>GET request:</b><br>
+  <pre><code>curl "http://127.0.0.1:5000/api/check_phishing?url=https://some-domain.com"</code></pre></li>
+
+  <li><b>POST request:</b><br>
+  <pre><code>curl -X POST -H "Content-Type: application/json" \
+  -d '{"url":"https://some-domain.com"}' \
+  http://127.0.0.1:5000/api/check_phishing</code></pre></li>
+</ol>
+
+<b>Sample JSON response:</b>
+<pre><code>{
+  "url": "https://some-domain.com",
+  "classification": "Suspicious",
+  "risk_score": 4,
+  "domain_age_days": 12
+}</code></pre>
+
+<hr>
+
+<h2>🛠 Configuration Notes</h2>
+
+<ul>
+  <li><b>Scoring Thresholds</b><br>
+    Default classification:
+    <ul>
+      <li><code>score ≤ 2</code> → Safe</li>
+      <li><code>2 &lt; score ≤ 5</code> → Suspicious</li>
+      <li><code>score &gt; 5</code> → Phishing</li>
+    </ul>
+    Adjust this logic in the <code>classify_score()</code> function.
+  </li>
+
+  <li><b>WHOIS Domain Age</b><br>
+    Newly registered domains (&lt; 30 days) are scored higher.<br>
+    You can customize this in <code>check_phishing()</code>.
+  </li>
+
+  <li><b>MetaMask List Caching</b><br>
+    The script fetches MetaMask lists from GitHub.<br>
+    For production, consider storing them locally to reduce network calls.
+  </li>
+</ul>
+
+<hr>
+
+<h2>🤝 Contributing</h2>
+
+<ol>
+  <li>Fork the repo and create a feature branch:<br>
+  <pre><code>git checkout -b feature/amazing_feature</code></pre></li>
+
+  <li>Commit your changes:<br>
+  <pre><code>git commit -m "Add some amazing feature"</code></pre></li>
+
+  <li>Push to your fork:<br>
+  <pre><code>git push origin feature/amazing_feature</code></pre></li>
+
+  <li>Open a Pull Request on GitHub</li>
+</ol>
+
+<hr>
+
+<h2>📄 License</h2>
+<p>
+  This project is provided under the <b>MIT License</b>.<br>
+  See the <code>LICENSE</code> file for details.
+</p>
+
+<hr>
+
+<h2>👨‍💻 Creator</h2>
+<p>
+  Created by <b>Ahmad Haji</b><br>
+  Maintained by <b>maud-stack</b>
+</p>
